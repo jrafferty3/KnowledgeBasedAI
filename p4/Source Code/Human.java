@@ -40,4 +40,8 @@ public class Human implements Player{
 	    return false;
 	}
     }
+	
+	public ArrayList<Trace> getBacktrack(){
+		return null;
+	}
 }

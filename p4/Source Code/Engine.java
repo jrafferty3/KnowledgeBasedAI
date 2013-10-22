@@ -11,6 +11,9 @@ public class Engine{
     private int winner = -1;
     private boolean tie = false;
     private ArrayList<String> trace = new ArrayList<String>();
+	private ArrayList<Trace> p1Trace;
+	private ArrayList<Trace> p2Trace;
+	
     public Engine(){
 	for(int i=0;i<9;i++){
 	    Node n = new Node(i);
@@ -46,9 +49,53 @@ public class Engine{
 	printBoard();
 	trace.add("///////////////////////////////");
 	for(int i=0;i<trace.size();i++){
-	    System.out.println(trace.get(i));
+	    //System.out.println(trace.get(i));
 	}
+	p1Trace = p1.getBacktrack();
+	p2Trace = p2.getBacktrack();
+	ArrayList<Trace> curr = p1Trace;
+	Trace tr = null;
+	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	while(true){
+	
+		System.out.println("Which player do you want to ask a question?");
+		try{
+			String p = br.readLine();
+			if(p.equals("1")){
+				curr = p1Trace;
+			}else{
+				curr = p2Trace;
+			}
+		}catch(Exception e){
+			continue;
+		}
+		System.out.println("Which turn are you interested in?");
+		try{
+			int t = Integer.parseInt(br.readLine());
+			for(int i=0;i<curr.size();i++){
+				if(curr.get(i).getTurn() == t){
+					tr = curr.get(i);
+				}
+			}
+		}catch(Exception e){
+			continue;
+		}
+		System.out.println("What type of question do you want to ask?");
+		try{
+			String ty = br.readLine();
+			if(ty.equals("why")){
+				System.out.println();
+				tr.why();
+			}else{
+				System.out.println();
+				tr.wrong();
+			}
+		}catch(Exception e){
+			continue;
+		}
+		System.out.println();
     }
+	}
 	
     public void printBoard(){
 	if(suppress) return;

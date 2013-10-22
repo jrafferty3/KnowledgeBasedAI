@@ -156,4 +156,8 @@ public class Naive implements Player{
 	}
 	return r_move;
     }
+	
+	public ArrayList<Trace> getBacktrack(){
+		return null;
+	}
 }
