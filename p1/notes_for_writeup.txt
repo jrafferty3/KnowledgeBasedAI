@@ -1,0 +1,266 @@
+how to compile:
+open file location in terminal
+javac TicTacToe.java
+
+how to run:
+open file location in terminal
+java TicTacToe x y z?
+where x and y are one of:
+	h : for human player
+	t : for thoughtful ai
+	n : for naive ai
+x is player 1
+y is player 2
+z? is a toggle for displaying the game board
+put an s to suppress the display of the board or nothing to show the board
+ex:
+	player 1 is a human and player 2 is thoughtful ai
+	java TicTacToe h t
+	player 1 is thoughtful ai and player 2 is naive ai with the board not displayed
+	java TicTacToe t n s
+	
+//matches
+t vs n
+thoughtful wins or there is a tie
+n vs t
+thoughtful wins or there is a tie
+n vs n
+even on wins with some ties
+t vs t 
+tie every time, always same exact game(both play optimally on each move)
+
+//design
+case based reasoning
+represents board as array of integers
+0 for nothing there
+1 for player 1
+2 for player 2
+knowledge is saved as string to represent board
+0 for nothing there
+! for opponent move
+~ for its move
+followed by index of next move selected
+when looking for similar state rotates each state in knowledge base 90 degrees 3 times to represent all possible rotations
+ex:
+   |   | X
+------------
+   | O | O
+------------
+ X |   |
+
+is the same as 
+
+ X |   |  
+------------
+   | O |  
+------------
+   | O | X
+   
+rotated 90 degrees, so the solution is eventually the same
+gets location chosen then, using number of rotations, gets the index of the unrotated location to choose
+knowledge was acquired by playing against both an "expert" and a random agent and asking for help when it did not know what to do
+if board cannot be found in the knowledge base then a random available index is chosen
+this shows how important full and correct data is to the agent when playing the naive ai
+it does not have sufficient data, and some incorrect data, to play optimally 
+
+
+N v T
+
+   |   |  
+-----------
+   |   |  
+-----------
+   |   |  
+
+
+   | X |  
+-----------
+   |   |  
+-----------
+   |   |  
+
+
+   | X |  
+-----------
+   | O |  
+-----------
+   |   |  
+
+
+   | X |  
+-----------
+   | O |  
+-----------
+ X |   |  
+
+
+ O | X |  
+-----------
+   | O |  
+-----------
+ X |   |  
+
+
+ O | X | X
+-----------
+   | O |  
+-----------
+ X |   |  
+
+///////////////////////////////
+Player 2 wins!
+
+ O | X | X
+-----------
+   | O |  
+-----------
+ X |   | O
+
+///////////////////////////////
+
+
+
+
+T v T
+
+   |   |  
+-----------
+   |   |  
+-----------
+   |   |  
+
+
+   |   |  
+-----------
+   | X |  
+-----------
+   |   |  
+
+
+   |   |  
+-----------
+   | X |  
+-----------
+ O |   |  
+
+
+   |   | X
+-----------
+   | X |  
+-----------
+ O |   |  
+
+
+ O |   | X
+-----------
+   | X |  
+-----------
+ O |   |  
+
+
+ O |   | X
+-----------
+ X | X |  
+-----------
+ O |   |  
+
+
+ O |   | X
+-----------
+ X | X | O
+-----------
+ O |   |  
+
+
+ O |   | X
+-----------
+ X | X | O
+-----------
+ O | X |  
+
+
+ O | O | X
+-----------
+ X | X | O
+-----------
+ O | X |  
+
+///////////////////////////////
+Tie game!
+
+ O | O | X
+-----------
+ X | X | O
+-----------
+ O | X | X
+
+///////////////////////////////
+
+
+N v N
+   |   |  
+-----------
+   |   |  
+-----------
+   |   |  
+
+
+ X |   |  
+-----------
+   |   |  
+-----------
+   |   |  
+
+
+ X |   |  
+-----------
+   | O |  
+-----------
+   |   |  
+
+
+ X |   |  
+-----------
+   | O |  
+-----------
+   | X |  
+
+
+ X |   |  
+-----------
+ O | O |  
+-----------
+   | X |  
+
+
+ X | X |  
+-----------
+ O | O |  
+-----------
+   | X |  
+
+
+ X | X | O
+-----------
+ O | O |  
+-----------
+   | X |  
+
+
+ X | X | O
+-----------
+ O | O |  
+-----------
+   | X | X
+
+///////////////////////////////
+Player 2 wins!
+
+ X | X | O
+-----------
+ O | O | O
+-----------
+   | X | X
+
+///////////////////////////////
+

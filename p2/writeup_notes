@@ -1,0 +1,214 @@
+to run:
+java -jar TicTacToe.jar
+
+can place t,n,h to change the way it runs
+javac TicTacToe.java  // to compile
+java TicTacToe  // to run, can place t,n,h to change the way it runs
+
+
+architecture
+TicTacToe is main class that handles command line args and determines the players
+Engine runs the game, swapping between players, checking wins, keeping track of the board and calling each player to get their move
+Node is the representation of each square on the board that keeps track of what player is in it
+Player is an interface for the different types of players, all have getMove method
+Human is a class for a human player, handles input from command line and checks for illegal moves
+Thoughtful is a class for the thoughtful agent, it follows the two rules: if you get three in a row you win and if your opponent gets three in a row you lose
+Naive is a class for the naive agent, it occasionally follows the two rules: if you get three in a row you win and if your opponent gets three in a row you lose, it has a chance to not look for those and just choose a random move
+	if either ai does not pick a random move it will look at its knowledge base that is sorted by winning, blocking, and strategy moves
+-talk about the methods as well
+-how board is represented
+-how knowledge is represented
+
+
+Thoughtful vs. Naive:
+   |   |  
+-----------
+   |   |  
+-----------
+   |   |  
+
+Looking for winning move.
+Checking 000
+Checking 000
+Checking 000
+Checking 000
+Checking 000
+Checking 000
+Checking 000
+Checking 000
+Looking for opponent winning move.
+Checking 000
+Checking 000
+Checking 000
+Checking 000
+Checking 000
+Checking 000
+Checking 000
+Checking 000
+Picking a strategy move.	//the thoughtful agent cannot pick a winning move and the opponent cannot win on the next move so it chooses a strategy move
+
+   |   |  
+-----------
+   | X |  
+-----------
+   |   |  
+
+Looking for winning move.
+Checking 000
+Checking 010
+Checking 000
+Checking 000
+Checking 010
+Checking 000
+Checking 010
+Checking 010
+Looking for opponent winning move.
+Checking 000
+Checking 010
+Checking 000
+Checking 000
+Checking 010
+Checking 000
+Checking 010
+Checking 010
+Picking a strategy move.	//naive does not see a winning move or an opponent winning move so it chose a strategy move
+
+   |   |  
+-----------
+   | X |  
+-----------
+ O |   |  
+
+Looking for winning move.
+Checking 000
+Checking 010
+Checking 200
+Checking 002
+Checking 010
+Checking 000
+Checking 010
+Checking 012
+Looking for opponent winning move.
+Checking 000
+Checking 010
+Checking 200
+Checking 002
+Checking 010
+Checking 000
+Checking 010
+Checking 012
+Picking a strategy move.	//no win, no opponent win, strat chosen
+
+   |   | X
+-----------
+   | X |  
+-----------
+ O |   |  
+
+Looking for winning move.
+Checking 001
+Checking 010
+Checking 200
+Checking 002
+Checking 010
+Checking 100
+Checking 010
+Checking 112
+Looking for opponent winning move.
+Checking 001
+Checking 010
+Checking 200
+Checking 002
+Checking 010
+Checking 100
+Checking 010
+Checking 112
+Picking a random move.	//no win, no opp win, does not look for a strategy move so it chooses randomly
+
+   | O | X
+-----------
+   | X |  
+-----------
+ O |   |  
+
+Looking for winning move.
+Checking 021
+Checking 010
+Checking 200
+Checking 002
+Checking 210
+Checking 100
+Checking 010
+Checking 112
+Looking for opponent winning move.
+Checking 021
+Checking 010
+Checking 200
+Checking 002
+Checking 210
+Checking 100
+Checking 010
+Checking 112
+Picking a strategy move.	//cant win or block so strat
+
+   | O | X
+-----------
+   | X |  
+-----------
+ O |   | X
+
+Looking for winning move.
+Checking 021
+Checking 010
+Checking 201
+Checking 002
+Checking 210
+Checking 101
+Checking 011
+Checking 112
+Picking a strategy move.	//does not see a winning move, does not look for an opponent winning move so misses blocking move, attempts to pick a strat
+							  move but this situation would be in the blocking category in the knowledge base, so it chooses randomly
+
+ O | O | X
+-----------
+   | X |  
+-----------
+ O |   | X
+
+Looking for winning move.
+Checking 221
+Checking 010
+Checking 201
+Checking 202
+Checking 210
+Checking 101
+Winning move found in third column.
+Picking a winning move.		//looks for a winning move and finds on in the third column so it picks the move and wins
+///////////////////////////////
+Player 1 wins!
+
+ O | O | X
+-----------
+   | X | X
+-----------
+ O |   | X
+
+
+Diff from project 1:
+
+reasons using rules of the game to pick move from sorted knowledge
+naive is not missing knowledge and does not have incorrect knowledge but has a chance to forget to check a rule
+ai understands rules of the game now, before it only knew what to do in specific situations
+
+
+
+
+
+
+
+
+
+
+
+
+
