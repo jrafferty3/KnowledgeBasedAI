@@ -8,20 +8,20 @@ public class Thoughtful implements Player{
     private int otherNumber;
     private boolean testing;
     private Strategy strat;
-	private ArrayList<Trace> backtrack;
-	private int turn;
+    private ArrayList<Trace> backtrack;
+    private int turn;
 	
     public Thoughtful(int number){
-		playerNumber = number;
-		if(number == 1){
-			otherNumber = 2;
-		}else{
-			otherNumber = 1;
-		}
-		testing = false;
-		strat = new Strategy(playerNumber,otherNumber);
-		backtrack = new ArrayList<Trace>();
-		turn = 1;
+	playerNumber = number;
+	if(number == 1){
+	    otherNumber = 2;
+	}else{
+	    otherNumber = 1;
+	}
+	testing = false;
+	strat = new Strategy(playerNumber,otherNumber);
+	backtrack = new ArrayList<Trace>();
+	turn = 1;
     }
 	
     public Thoughtful(int number, String s){
@@ -147,7 +147,7 @@ public class Thoughtful implements Player{
 	return ret;
     }	
 	
-	public ArrayList<Trace> getBacktrack(){
-		return backtrack;
-	}
+    public ArrayList<Trace> getBacktrack(){
+	return backtrack;
+    }
 }

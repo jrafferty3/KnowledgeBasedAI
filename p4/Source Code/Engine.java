@@ -11,14 +11,18 @@ public class Engine{
     private int winner = -1;
     private boolean tie = false;
     private ArrayList<String> trace = new ArrayList<String>();
-	private ArrayList<Trace> p1Trace;
-	private ArrayList<Trace> p2Trace;
+    private ArrayList<Trace> p1Trace;
+    private ArrayList<Trace> p2Trace;
+    private int p1Turn;
+    private int p2Turn;
 	
     public Engine(){
 	for(int i=0;i<9;i++){
 	    Node n = new Node(i);
 	    board.add(n);
 	}
+	p1Turn = 0;
+	p2Turn = 0;
     }
 	
     public void runGame(Player p1, Player p2, boolean suppress, boolean human) throws IOException{
@@ -27,11 +31,15 @@ public class Engine{
 	while(game){
 	    printBoard();
 	    if(turn%2!=0){
+		p1Turn++;
+		trace.add("Player 1 turn: "+p1Turn);
 		int p1_move = p1.getMove(aval, trace);
 		board.get(p1_move).markX();
 		aval[p1_move] = 1;
 		turn++;
 	    }else{
+		p2Turn++;
+		trace.add("Player 2 turn: "+p2Turn);
 		int p2_move = p2.getMove(aval, trace);
 		board.get(p2_move).markO();
 		aval[p2_move] = 2;
@@ -49,53 +57,65 @@ public class Engine{
 	printBoard();
 	trace.add("///////////////////////////////");
 	for(int i=0;i<trace.size();i++){
-	    //System.out.println(trace.get(i));
+	    System.out.println(trace.get(i));
 	}
 	p1Trace = p1.getBacktrack();
 	p2Trace = p2.getBacktrack();
 	ArrayList<Trace> curr = p1Trace;
 	Trace tr = null;
 	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	while(true){
+	boolean question = true;
+	while(question){
 	
-		System.out.println("Which player do you want to ask a question?");
-		try{
-			String p = br.readLine();
-			if(p.equals("1")){
-				curr = p1Trace;
-			}else{
-				curr = p2Trace;
-			}
-		}catch(Exception e){
-			continue;
+	    System.out.println("Which player do you want to ask a question?");
+	    try{
+		String p = br.readLine();
+		if(p.equals("1")){
+		    curr = p1Trace;
+		}else{
+		    curr = p2Trace;
 		}
-		System.out.println("Which turn are you interested in?");
-		try{
-			int t = Integer.parseInt(br.readLine());
-			for(int i=0;i<curr.size();i++){
-				if(curr.get(i).getTurn() == t){
-					tr = curr.get(i);
-				}
-			}
-		}catch(Exception e){
-			continue;
+	    }catch(Exception e){
+		continue;
+	    }
+	    System.out.println("Which turn are you interested in?");
+	    try{
+		int t = Integer.parseInt(br.readLine());
+		for(int i=0;i<curr.size();i++){
+		    if(curr.get(i).getTurn() == t){
+			tr = curr.get(i);
+		    }
 		}
-		System.out.println("What type of question do you want to ask?");
-		try{
-			String ty = br.readLine();
-			if(ty.equals("why")){
-				System.out.println();
-				tr.why();
-			}else{
-				System.out.println();
-				tr.wrong();
-			}
-		}catch(Exception e){
-			continue;
+	    }catch(Exception e){
+		continue;
+	    }
+	    System.out.println("What type of question do you want to ask?");
+	    try{
+		String ty = br.readLine();
+		if(ty.equals("why")){
+		    System.out.println();
+		    tr.why();
+		}else{
+		    System.out.println();
+		    tr.wrong();
 		}
-		System.out.println();
-    }
+	    }catch(Exception e){
+		continue;
+	    }
+	    System.out.println();
+	    System.out.println("Would you like to ask another question?");
+	    try{
+		String dec = br.readLine();
+		if(dec.equals("yes")){
+		    continue;
+		}else{
+		    question = false;
+		}
+	    }catch(Exception e){
+		continue;
+	    }
 	}
+    }
 	
     public void printBoard(){
 	if(suppress) return;
@@ -115,16 +135,16 @@ public class Engine{
 	}else{
 	    trace.add("");
 	    trace.add(" "+(board.get(0).toString().matches("[0-9]")? " ":board.get(0))+" | "
-			       +(board.get(1).toString().matches("[0-9]")? " ":board.get(1))+" | "
-			       +(board.get(2).toString().matches("[0-9]")? " ":board.get(2)));
+		      +(board.get(1).toString().matches("[0-9]")? " ":board.get(1))+" | "
+		      +(board.get(2).toString().matches("[0-9]")? " ":board.get(2)));
 	    trace.add("-----------");
 	    trace.add(" "+(board.get(3).toString().matches("[0-9]")? " ":board.get(3))+" | "
-			       +(board.get(4).toString().matches("[0-9]")? " ":board.get(4))+" | "
-			       +(board.get(5).toString().matches("[0-9]")? " ":board.get(5)));
+		      +(board.get(4).toString().matches("[0-9]")? " ":board.get(4))+" | "
+		      +(board.get(5).toString().matches("[0-9]")? " ":board.get(5)));
 	    trace.add("-----------");
 	    trace.add(" "+(board.get(6).toString().matches("[0-9]")? " ":board.get(6))+" | "
-			       +(board.get(7).toString().matches("[0-9]")? " ":board.get(7))+" | "
-			       +(board.get(8).toString().matches("[0-9]")? " ":board.get(8)));
+		      +(board.get(7).toString().matches("[0-9]")? " ":board.get(7))+" | "
+		      +(board.get(8).toString().matches("[0-9]")? " ":board.get(8)));
 	    trace.add("");
 	}
     }

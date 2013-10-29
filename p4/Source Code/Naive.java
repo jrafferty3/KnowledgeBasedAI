@@ -8,6 +8,9 @@ public class Naive implements Player{
     private int otherNumber;
     private boolean testing;
     private Strategy strat;
+    private ArrayList<Trace> backtrack;
+    private int turn;
+
     public Naive(int number){
 	playerNumber = number;
 	if(number == 1){
@@ -17,6 +20,8 @@ public class Naive implements Player{
 	}
 	testing = false;
 	strat = new Strategy(playerNumber,otherNumber);
+	backtrack = new ArrayList<Trace>();
+	turn = 1;
     }
 	
     public Naive(int number, String s){
@@ -36,7 +41,12 @@ public class Naive implements Player{
 	int wr = win_rand.nextInt(4);
 	int br = block_rand.nextInt(2);
 	int sr = strat_rand.nextInt(3);
-	return searchMove(board,strat.applyStrategy(board,wr,br,sr, trace));
+	String ret = strat.applyStrategy(board,wr,br,sr,trace);
+	ArrayList<String> temp = new ArrayList<String>();
+	String real = strat.applyStrategy(board,temp);
+	Trace t = new Trace(ret,real,trace.get(trace.size()-2),turn++);
+	backtrack.add(t);
+	return searchMove(board,ret);
     }
 	
     public int searchMove(int[] board, String type) throws IOException{
@@ -157,7 +167,7 @@ public class Naive implements Player{
 	return r_move;
     }
 	
-	public ArrayList<Trace> getBacktrack(){
-		return null;
-	}
+    public ArrayList<Trace> getBacktrack(){
+	return backtrack;
+    }
 }

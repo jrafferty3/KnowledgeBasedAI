@@ -5,6 +5,8 @@ public class Trace{
 	private int turn;
 	
 	public Trace(String move, String best_move, String message, int turn){
+		this.message = message;
+		this.turn = turn;
 		switch(move){
 			case "w":
 				type = "winning";
@@ -14,9 +16,11 @@ public class Trace{
 				break;
 			case "s":
 				type = "strategic";
+				this.message = "I did not find any winning or blocking moves.";
 				break;
 			case "r":
 				type = "random";
+				this.message = "I failed to pick any move.";
 				break;
 		}
 		switch(best_move){
@@ -33,14 +37,12 @@ public class Trace{
 				best = "random";
 				break;
 		}
-		this.message = message;
-		this.turn = turn;
-		System.out.println(type+" "+message+" "+turn);
+		//System.out.println(type+" "+message+" "+turn);
 	}
 	
 	public void why(){
-		System.out.println("I decided the best move was a "+type+" move.");
 		System.out.println(message);
+		System.out.println("I decided the best move was a "+type+" move.");
 	}
 	
 	public boolean isWrong(){
