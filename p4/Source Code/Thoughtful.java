@@ -36,9 +36,10 @@ public class Thoughtful implements Player{
 	
     public int getMove(int[] board, ArrayList<String> trace) throws IOException{
 	String ret = strat.applyStrategy(board, trace);
-	Trace t = new Trace(ret,ret,trace.get(trace.size()-2),turn++);
+	int place = searchMove(board,ret);
+	Trace t = new Trace(ret,ret,trace.get(trace.size()-2),turn++,place);
 	backtrack.add(t);
-	return searchMove(board,ret);
+	return place;
     }
 
     public int searchMove(int[] board, String type) throws IOException{

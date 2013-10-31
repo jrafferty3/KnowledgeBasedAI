@@ -44,9 +44,10 @@ public class Naive implements Player{
 	String ret = strat.applyStrategy(board,wr,br,sr,trace);
 	ArrayList<String> temp = new ArrayList<String>();
 	String real = strat.applyStrategy(board,temp);
-	Trace t = new Trace(ret,real,trace.get(trace.size()-2),turn++);
+	int place = searchMove(board,ret);
+	Trace t = new Trace(ret,real,trace.get(trace.size()-2),turn++,place);
 	backtrack.add(t);
-	return searchMove(board,ret);
+	return place;
     }
 	
     public int searchMove(int[] board, String type) throws IOException{

@@ -95,9 +95,14 @@ public class Engine{
 		if(ty.equals("why")){
 		    System.out.println();
 		    tr.why();
-		}else{
+		}else if(ty.equals("wrong")){
 		    System.out.println();
 		    tr.wrong();
+		}else if(ty.equals("which")){
+		    System.out.println();
+		    tr.which();
+		}else{
+		    continue;
 		}
 	    }catch(Exception e){
 		continue;
